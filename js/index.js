@@ -89,10 +89,73 @@ function renderGlutenFreeCrust() {
 
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
-}
+  const buttons = document.querySelectorAll(".btn");
+  console.log(buttons);
+  const arrIngredientsState = Object.values(state);
+  console.log(arrIngredientsState);
+
+  //peperoni
+  if(state.pepperoni){
+    document.querySelector(".btn.btn-pepperoni").classList.add("active");
+  } else {
+    document.querySelector(".btn.btn-pepperoni").classList.remove("active");
+  }
+
+  //mushrooms
+  if(state.mushrooms){
+    document.querySelector(".btn.btn-mushrooms").classList.add("active");
+  } else {
+    document.querySelector(".btn.btn-mushrooms").classList.remove("active");
+  }
+
+  //green-pepper
+  if(state.greenPeppers){
+    document.querySelector(".btn.btn-green-peppers").classList.add("active");
+  } else {
+    document.querySelector(".btn.btn-green-peppers").classList.remove("active");
+  }
+
+  //white sauce
+  if(!state.whiteSauce) {
+    document.querySelector(".btn.btn-sauce").classList.remove("active");
+  } else {
+    document.querySelector(".btn.btn-sauce").classList.add("active");
+  }
+
+  //gluten-free crust
+  if(!state.glutenFreeCrust) {
+    document.querySelector(".btn.btn-crust").classList.remove("active");
+  } else {
+    document.querySelector(".btn.btn-crust").classList.add("active");
+  }
+
+};
 
 function renderPrice() {
   // Iteration 4: change the HTML of `<aside class="panel price">`
+  
+  // Selecting the price elements
+  let totalPrice = document.querySelector(".panel.price strong");
+  let sumPrice = basePrice;
+
+  //Eraising the current HTML content of the <ul>
+  const panelPriceList = document.querySelector('.panel.price ul');
+  panelPriceList.innerHTML = '';
+
+  //Defining a rule by which the ingredients with a "state{ ingredientName:true}" will be printed
+  for(let prop in state) {
+    if(state[prop]) {
+      let newItem = document.createElement("li");
+      newItem.innerHTML =`$${ingredients[prop].price} ${ingredients[prop].name}`;
+      panelPriceList.appendChild(newItem)
+
+      console.log(ingredients[prop].price);
+      sumPrice = sumPrice + ingredients[prop].price;
+      console.log(sumPrice);
+    }
+  }
+
+  totalPrice.innerHTML = `<strong>$ ${sumPrice}</strong>`
 }
 
 renderEverything();
